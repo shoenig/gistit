@@ -2,17 +2,32 @@ package main
 
 import "errors"
 import "fmt"
+import "io/ioutil"
+import "net/http"
 import "os"
 import "path/filepath"
 import "strings"
 
 func main() {
-	fmt.Printf("gistit\n")
-	err := gistitrc()
-	if err == nil {
+	gistitrcOK := gistitrc()
+	if gistitrcOK == nil {
 		fmt.Println("Using .gistitrc")
 	} else {
 		fmt.Println("Not using .gistitrc")
+	}
+
+	getGist(1)
+}
+
+func getGist(id int) {
+	resp, err := http.Get("https://api.github.com/gists/1")
+	if err != nil {
+		fmt.Println("Error", err)
+	} else {
+		fmt.Println("Ok", resp)
+		defer resp.Body.Close()
+		body, _ := ioutil.ReadAll(resp.Body)
+		fmt.Println(string(body))
 	}
 }
 
