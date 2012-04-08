@@ -11,7 +11,8 @@ func main() {
 	// gistitrcOK := gistitrc() NOT YET SUPPORTED
 
 	g := githubapi.GetGist(1)
-	fmt.Println(g.Url())
+	//fmt.Println(g.Url())
+	fmt.Println(g)
 }
 
 func gistitrc() error {

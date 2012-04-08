@@ -37,13 +37,14 @@ func noinit() {
 type Gist struct {
 	data        internal
 	initialized bool
+	orig        string
 }
 
 func (g Gist) String() string {
 	if !g.initialized {
 		noinit()
 	}
-	return "Gist!"
+	return g.orig
 }
 
 func (g *Gist) Url() string {
@@ -153,6 +154,7 @@ func jsonToGist(jsondata []byte) Gist {
 		os.Exit(1)
 	}
 	var g Gist
+	g.orig = string(jsondata)
 	g.setInternal(i)
 	return g
 }
