@@ -11,11 +11,11 @@ import "os"
 
 const api_url = "https://api.github.com/"
 
-
-/* We do not want users to be able to access these fields directly,
-but they must be public for the JSON package to use. So we put them
-in an unexported struct, and put the struct in a wrapper, which then
-provides public accessors */
+// We do not want users to be able to access these fields directly
+// (we do not want them handling interface{}),
+// but they must be public for the JSON package to use. So we put them
+// in an unexported struct, and put the struct in a wrapper, which then
+// provides public accessors.
 type internal struct {
 	Url          string
 	Id           string
@@ -53,6 +53,27 @@ func (g *Gist) Url() string {
 		noinit()
 	}
 	return g.data.Url
+}
+
+func (g *Gist) Id() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Id
+}
+
+func (g *Gist) Description() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Description
+}
+
+func (g *Gist) Public() bool {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Public
 }
 
 func (g *Gist) setInternal(i internal) {

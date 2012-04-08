@@ -8,12 +8,7 @@ import "strings"
 import "./githubapi"
 
 func main() {
-	gistitrcOK := gistitrc()
-	if gistitrcOK == nil {
-		fmt.Println("Using .gistitrc")
-	} else {
-		fmt.Println("Not using .gistitrc")
-	}
+	// gistitrcOK := gistitrc() NOT YET SUPPORTED
 
 	g := githubapi.GetGist(1)
 	fmt.Println(g.Url())
