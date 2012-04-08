@@ -2,10 +2,17 @@ package githubapi
 
 import "testing"
 
-func Test_jsonToGist(t *testing.T) {
-	result := jsonToGist([]byte(GET_GIST))
-	if result.data.Url != "https://api.github.com/gists/1" {
-		t.Error("Url is incorrect")
+func Test_jsonToGist_initialized(t *testing.T) {
+	g := jsonToGist([]byte(GET_GIST))
+	if !g.initialized {
+		t.Error("gist was not initialized upon being filled in")
+	}
+}
+
+func Test_jsonToGist_url(t *testing.T) {
+	g := jsonToGist([]byte(GET_GIST))
+	if g.data.Url != "https://api.github.com/gists/1" {
+		t.Error("data.Url is incorrect")
 	}
 }
 
