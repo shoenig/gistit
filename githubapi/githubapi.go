@@ -134,7 +134,7 @@ func (g *Gist) GitPushUrl() string {
 	if !g.initialized {
 		noinit()
 	}
-	return g.data.GitPushRul
+	return g.data.GitPushUrl
 }
 
 func (g *Gist) setInternal(i internal) {
@@ -145,6 +145,18 @@ func (g *Gist) setInternal(i internal) {
 	g.data = i
 }
 
+func jsonToGist(jsondata []byte) Gist {
+	var i internal
+	jsonerr := json.Unmarshal(jsondata, &i)
+	if jsonerr != nil {
+		fmt.Printf("Error unmarshaling JSON content", jsonerr)
+		os.Exit(1)
+	}
+	var g Gist
+	g.setInternal(i)
+	return g
+}
+
 func GetGist(id int) Gist {
 	resp, httperr := http.Get(api_url + "gists/" + strconv.Itoa(id))
 	if httperr != nil {
@@ -153,13 +165,5 @@ func GetGist(id int) Gist {
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
-	var i internal
-	jsonerr := json.Unmarshal(body, &i)
-	if jsonerr != nil {
-		fmt.Printf("Error unmarshaling JSON content", jsonerr)
-		os.Exit(1)
-	}
-	var g Gist
-	g.setInternal(i)
-	return g
+	return jsonToGist(body)
 }
