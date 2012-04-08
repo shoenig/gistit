@@ -11,6 +11,11 @@ import "os"
 
 const api_url = "https://api.github.com/"
 
+
+/* We do not want users to be able to access these fields directly,
+but they must be public for the JSON package to use. So we put them
+in an unexported struct, and put the struct in a wrapper, which then
+provides public accessors */
 type internal struct {
 	Url          string
 	Id           string
