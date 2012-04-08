@@ -3,8 +3,6 @@ package githubapi
 import "encoding/json"
 import "strconv"
 import "net/http"
-
-//import "errors"
 import "fmt"
 import "io/ioutil"
 import "os"
@@ -17,19 +15,19 @@ const api_url = "https://api.github.com/"
 // in an unexported struct, and put the struct in a wrapper, which then
 // provides public accessors.
 type internal struct {
-	Url          string
-	Id           string
-	Description  string
-	Public       bool
-	User         map[string]interface{}
-	Files        map[string]map[string]interface{}
-	Comments     int
-	Html_url     string
-	Git_pull_url string
-	Git_push_url string
-	Created_at   string
-	Forks        []interface{}
-	History      []interface{}
+	Url         string
+	Id          string
+	Description string
+	Public      bool
+	User        map[string]interface{}
+	Files       map[string]map[string]interface{}
+	Comments    int
+	HtmlUrl     string
+	GitPullUrl  string
+	GitPushUrl  string
+	CreatedAt   string
+	Forks       []interface{}
+	History     []interface{}
 }
 
 func noinit() {
@@ -83,11 +81,60 @@ func (g *Gist) UserLogin() string {
 	return (g.data.User["login"]).(string)
 }
 
+func (g *Gist) UserId() int {
+	if !g.initialized {
+		noinit()
+	}
+	return (g.data.User["id"]).(int)
+}
+
+func (g *Gist) UserAvatarUrl() string {
+	if !g.initialized {
+		noinit()
+	}
+	return (g.data.User["avatar_url"]).(string)
+}
+
+func (g *Gist) UserGravatarId() string {
+	if !g.initialized {
+		noinit()
+	}
+	return (g.data.User["gravatar_id"]).(string)
+}
+
+func (g *Gist) UserUrl() string {
+	if !g.initialized {
+		noinit()
+	}
+	return (g.data.User["url"]).(string)
+}
+
 func (g *Gist) Comments() int {
 	if !g.initialized {
 		noinit()
 	}
 	return g.data.Comments
+}
+
+func (g *Gist) HtmlUrl() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.HtmlUrl
+}
+
+func (g *Gist) GitPullUrl() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.GitPullUrl
+}
+
+func (g *Gist) GitPushUrl() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.GitPushRul
 }
 
 func (g *Gist) setInternal(i internal) {
