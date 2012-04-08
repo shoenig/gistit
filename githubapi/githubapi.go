@@ -76,6 +76,20 @@ func (g *Gist) Public() bool {
 	return g.data.Public
 }
 
+func (g *Gist) UserLogin() string {
+	if !g.initialized {
+		noinit()
+	}
+	return (g.data.User["login"]).(string)
+}
+
+func (g *Gist) Comments() int {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Comments
+}
+
 func (g *Gist) setInternal(i internal) {
 	if g.initialized {
 		noinit()
