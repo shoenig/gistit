@@ -12,7 +12,10 @@ func Test_jsonToGist_initialized(t *testing.T) {
 func Test_jsonToGist_url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
 	if g.data.Url != "https://api.github.com/gists/1" {
-		t.Error("data.Url is incorrect")
+		t.Error("g.data.Url is incorrect")
+	}
+	if g.Url() != "https://api.github.com/gists/1" {
+		t.Error("g.Url() is incorrect")
 	}
 }
 
