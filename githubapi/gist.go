@@ -145,6 +145,13 @@ func (g *Gist) GetForks() []Fork {
 	return g.data.Forks
 }
 
+func (g *Gist) GetHistories() []History {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.History
+}
+
 func jsonToGist(jsondata []byte) Gist {
 	var i internal
 	jsonerr := json.Unmarshal(jsondata, &i)
@@ -187,7 +194,7 @@ type internal struct {
 	Git_Push_Url string
 	Created_At   string
 	Forks        []Fork
-	History      []interface{}
+	History      []History
 }
 
 func noinit() {
