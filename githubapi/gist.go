@@ -138,6 +138,13 @@ func (g *Gist) GetFile(filename string) File {
 	return g.data.Files[filename]
 }
 
+func (g *Gist) GetForks() []Fork {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Forks
+}
+
 func jsonToGist(jsondata []byte) Gist {
 	var i internal
 	jsonerr := json.Unmarshal(jsondata, &i)
@@ -179,7 +186,7 @@ type internal struct {
 	Git_Pull_Url string
 	Git_Push_Url string
 	Created_At   string
-	Forks        []interface{}
+	Forks        []Fork
 	History      []interface{}
 }
 
