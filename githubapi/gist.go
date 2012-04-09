@@ -120,6 +120,17 @@ func (g *Gist) CreatedAt() string {
 	return g.data.Created_At
 }
 
+func (g *Gist) GetFiles() []File {
+	if !g.initialized {
+		noinit()
+	}
+	var files []File
+	for _, v := range g.data.Files {
+		files = append(files, v)
+	}
+	return files
+}
+
 func (g *Gist) GetFile(filename string) File {
 	if !g.initialized {
 		noinit()

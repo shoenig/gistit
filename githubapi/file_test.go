@@ -29,3 +29,14 @@ func Test_GetFile_Content(t *testing.T) {
 		t.Error("f.Content incorrect")
 	}
 }
+
+func Test_GetFiles(t *testing.T) {
+	g := jsonToGist([]byte(GET_GIST))
+	files := g.GetFiles()
+	if len(files) != 1 {
+		t.Error("g.GetFiles length failed")
+	}
+	if files[0].Filename != "ring.erl" {
+		t.Error("g.GetFiles failed")
+	}
+}
