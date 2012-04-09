@@ -49,12 +49,6 @@ func Test_jsonToGist_public(t *testing.T) {
 	}
 }
 
-func Test_jsonToGist_user(t *testing.T) {
-}
-
-func Test_jsonToGist_files(t *testing.T) {
-}
-
 func Test_jsonToGist_comments(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
 	if g.data.Comments != 0 {
