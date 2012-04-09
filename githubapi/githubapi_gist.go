@@ -120,6 +120,13 @@ func (g *Gist) CreatedAt() string {
 	return g.data.Created_At
 }
 
+func (g *Gist) GetFile(filename string) File {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Files[filename]
+}
+
 func jsonToGist(jsondata []byte) Gist {
 	var i internal
 	jsonerr := json.Unmarshal(jsondata, &i)
@@ -155,7 +162,7 @@ type internal struct {
 	Description  string
 	Public       bool
 	User         map[string]interface{}
-	Files        map[string]map[string]interface{}
+	Files        map[string]File
 	Comments     int
 	Html_Url     string
 	Git_Pull_Url string
