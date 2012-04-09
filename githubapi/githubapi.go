@@ -9,31 +9,6 @@ import "os"
 
 const api_url = "https://api.github.com/"
 
-// We do not want users to be able to access these fields directly
-// (we do not want them handling interface{}),
-// but they must be public for the JSON package to use. So we put them
-// in an unexported struct, and put the struct in a wrapper, which then
-// provides public accessors.
-type internal struct {
-	Url          string
-	Id           string
-	Description  string
-	Public       bool
-	User         map[string]interface{}
-	Files        map[string]map[string]interface{}
-	Comments     int
-	Html_Url     string
-	Git_Pull_Url string
-	Git_Push_Url string
-	Created_At   string
-	Forks        []interface{}
-	History      []interface{}
-}
-
-func noinit() {
-	panic("cannot call method on un-initialized gist")
-}
-
 type Gist struct {
 	data        internal
 	initialized bool
@@ -145,14 +120,6 @@ func (g *Gist) CreatedAt() string {
 	return g.data.Created_At
 }
 
-func (g *Gist) setInternal(i internal) {
-	if g.initialized {
-		noinit()
-	}
-	g.initialized = true
-	g.data = i
-}
-
 func jsonToGist(jsondata []byte) Gist {
 	var i internal
 	jsonerr := json.Unmarshal(jsondata, &i)
@@ -175,4 +142,37 @@ func GetGist(id int) Gist {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	return jsonToGist(body)
+}
+
+// We do not want users to be able to access these fields directly
+// (we do not want them handling interface{}),
+// but they must be public for the JSON package to use. So we put them
+// in an unexported struct, and put the struct in a wrapper, which then
+// provides public accessors.
+type internal struct {
+	Url          string
+	Id           string
+	Description  string
+	Public       bool
+	User         map[string]interface{}
+	Files        map[string]map[string]interface{}
+	Comments     int
+	Html_Url     string
+	Git_Pull_Url string
+	Git_Push_Url string
+	Created_At   string
+	Forks        []interface{}
+	History      []interface{}
+}
+
+func noinit() {
+	panic("cannot call method on un-initialized gist")
+}
+
+func (g *Gist) setInternal(i internal) {
+	if g.initialized {
+		noinit()
+	}
+	g.initialized = true
+	g.data = i
 }
