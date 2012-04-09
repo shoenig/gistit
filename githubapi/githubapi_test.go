@@ -69,19 +69,29 @@ func Test_jsonToGist_html_url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
 
 	if g.data.Html_Url != "https://gist.github.com/1" {
-		t.Error("g.data.Html_Url is incorrect, %v", g.data.Html_Url)
+		t.Error("g.data.Html_Url is incorrect")
 	}
-	if g.Html_Url() != "https://gist.github.com/1" {
-		t.Error("g.Html_Url() is incorrect, %v", g.Html_Url())
+	if g.HtmlUrl() != "https://gist.github.com/1" {
+		t.Error("g.Html_Url() is incorrect")
 	}
 }
 
 func Test_jsonToGist_git_push_url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
 	if g.data.Git_Pull_Url != "git://gist.github.com/1.git" {
-		t.Error("g.data.Git_Pull_Url is incorrect, %v", g.data.Git_Pull_Url)
+		t.Error("g.data.Git_Pull_Url is incorrect")
 	}
-	if g.Html_Url() != "git://gist.github.com/1.git" {
-		t.Error("g.Html_Url() is incorrect, %v", g.Html_Url())
+	if g.GitPullUrl() != "git://gist.github.com/1.git" {
+		t.Error("g.GitPullUrl() is incorrect")
+	}
+}
+
+func Test_jsonToGit_created_at(t *testing.T) {
+	g := jsonToGist([]byte(GET_GIST))
+	if g.data.Created_At != "2010-04-14T02:15:15Z" {
+		t.Error("g.data.Created_At is incorrect")
+	}
+	if g.CreatedAt() != "2010-04-14T02:15:15Z" {
+		t.Error("g.CreatedAt() is incorrect")
 	}
 }

@@ -15,19 +15,19 @@ const api_url = "https://api.github.com/"
 // in an unexported struct, and put the struct in a wrapper, which then
 // provides public accessors.
 type internal struct {
-	Url         string
-	Id          string
-	Description string
-	Public      bool
-	User        map[string]interface{}
-	Files       map[string]map[string]interface{}
-	Comments    int
+	Url          string
+	Id           string
+	Description  string
+	Public       bool
+	User         map[string]interface{}
+	Files        map[string]map[string]interface{}
+	Comments     int
 	Html_Url     string
-	Git_Pull_Url  string
-	Git_Push_Url  string
+	Git_Pull_Url string
+	Git_Push_Url string
 	Created_At   string
-	Forks       []interface{}
-	History     []interface{}
+	Forks        []interface{}
+	History      []interface{}
 }
 
 func noinit() {
@@ -117,25 +117,32 @@ func (g *Gist) Comments() int {
 	return g.data.Comments
 }
 
-func (g *Gist) Html_Url() string {
+func (g *Gist) HtmlUrl() string {
 	if !g.initialized {
 		noinit()
 	}
 	return g.data.Html_Url
 }
 
-func (g *Gist) Git_Pull_Url() string {
+func (g *Gist) GitPullUrl() string {
 	if !g.initialized {
 		noinit()
 	}
 	return g.data.Git_Pull_Url
 }
 
-func (g *Gist) Git_Push_Url() string {
+func (g *Gist) GitPushUrl() string {
 	if !g.initialized {
 		noinit()
 	}
 	return g.data.Git_Push_Url
+}
+
+func (g *Gist) CreatedAt() string {
+	if !g.initialized {
+		noinit()
+	}
+	return g.data.Created_At
 }
 
 func (g *Gist) setInternal(i internal) {
