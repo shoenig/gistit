@@ -9,6 +9,17 @@ import "os"
 
 const api_url = "https://api.github.com/"
 
+// File provides methods which provide actual content and some
+// meta information about the individual files that make up a gist.
+type File struct {
+	Name string
+	Size int
+	Raw_url string
+	Content string
+}
+
+// Gist contains methods which provide meta-data about a
+// gist on github.
 type Gist struct {
 	data        internal
 	initialized bool
