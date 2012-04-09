@@ -54,35 +54,35 @@ func (g *Gist) UserLogin() string {
 	if !g.initialized {
 		noinit()
 	}
-	return (g.data.User["login"]).(string)
+	return g.data.UserMap["user"].Login
 }
 
 func (g *Gist) UserId() int {
 	if !g.initialized {
 		noinit()
 	}
-	return (g.data.User["id"]).(int)
+	return g.data.UserMap["user"].Id
 }
 
 func (g *Gist) UserAvatarUrl() string {
 	if !g.initialized {
 		noinit()
 	}
-	return (g.data.User["avatar_url"]).(string)
+	return g.data.UserMap["user"].Avatar_Url
 }
 
 func (g *Gist) UserGravatarId() string {
 	if !g.initialized {
 		noinit()
 	}
-	return (g.data.User["gravatar_id"]).(string)
+	return g.data.UserMap["user"].Gravatar_Id
 }
 
 func (g *Gist) UserUrl() string {
 	if !g.initialized {
 		noinit()
 	}
-	return (g.data.User["url"]).(string)
+	return g.data.UserMap["user"].Url
 }
 
 func (g *Gist) Comments() int {
@@ -161,7 +161,7 @@ type internal struct {
 	Id           string
 	Description  string
 	Public       bool
-	User         map[string]interface{}
+	UserMap      map[string]User
 	Files        map[string]File
 	Comments     int
 	Html_Url     string
