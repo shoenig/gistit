@@ -22,10 +22,10 @@ type internal struct {
 	User        map[string]interface{}
 	Files       map[string]map[string]interface{}
 	Comments    int
-	HtmlUrl     string
-	GitPullUrl  string
-	GitPushUrl  string
-	CreatedAt   string
+	Html_Url     string
+	Git_Pull_Url  string
+	Git_Push_Url  string
+	Created_At   string
 	Forks       []interface{}
 	History     []interface{}
 }
@@ -117,25 +117,25 @@ func (g *Gist) Comments() int {
 	return g.data.Comments
 }
 
-func (g *Gist) HtmlUrl() string {
+func (g *Gist) Html_Url() string {
 	if !g.initialized {
 		noinit()
 	}
-	return g.data.HtmlUrl
+	return g.data.Html_Url
 }
 
-func (g *Gist) GitPullUrl() string {
+func (g *Gist) Git_Pull_Url() string {
 	if !g.initialized {
 		noinit()
 	}
-	return g.data.GitPullUrl
+	return g.data.Git_Pull_Url
 }
 
-func (g *Gist) GitPushUrl() string {
+func (g *Gist) Git_Push_Url() string {
 	if !g.initialized {
 		noinit()
 	}
-	return g.data.GitPushUrl
+	return g.data.Git_Push_Url
 }
 
 func (g *Gist) setInternal(i internal) {

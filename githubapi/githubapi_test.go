@@ -68,20 +68,20 @@ func Test_jsonToGist_comments(t *testing.T) {
 func Test_jsonToGist_html_url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
 
-	if g.data.HtmlUrl != "https://gist.github.com/1" {
-		t.Error("g.data.HtmlUrl is incorrect, %v", g.data.HtmlUrl)
+	if g.data.Html_Url != "https://gist.github.com/1" {
+		t.Error("g.data.Html_Url is incorrect, %v", g.data.Html_Url)
 	}
-	if g.HtmlUrl() != "https://gist.github.com/1" {
-		t.Error("g.HtmlUrl() is incorrect, %v", g.HtmlUrl())
+	if g.Html_Url() != "https://gist.github.com/1" {
+		t.Error("g.Html_Url() is incorrect, %v", g.Html_Url())
 	}
 }
 
 func Test_jsonToGist_git_push_url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
-	if g.data.GitPullUrl != "git://gist.github.com/1.git" {
-		t.Error("g.data.GitPullUrl is incorrect, %v", g.data.GitPullUrl)
+	if g.data.Git_Pull_Url != "git://gist.github.com/1.git" {
+		t.Error("g.data.Git_Pull_Url is incorrect, %v", g.data.Git_Pull_Url)
 	}
-	if g.HtmlUrl() != "git://gist.github.com/1.git" {
-		t.Error("g.HtmlUrl() is incorrect, %v", g.HtmlUrl())
+	if g.Html_Url() != "git://gist.github.com/1.git" {
+		t.Error("g.Html_Url() is incorrect, %v", g.Html_Url())
 	}
 }
