@@ -10,7 +10,7 @@ import "./githubapi"
 func main() {
 	// gistitrcOK := gistitrc() NOT YET SUPPORTED
 
-	g := githubapi.GetGist(1)
+	g := githubapi.GetGistResponse(1)
 	//fmt.Println(g.Url())
 	fmt.Println(g)
 }
