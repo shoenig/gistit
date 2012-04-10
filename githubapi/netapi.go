@@ -38,7 +38,7 @@ func ListUserGists(user string) []GistResponse {
 
 func PushGist(description string, files ...File) {
 	// TODO: enable setting public to False (needs OAUTH working)
-	g := createNewGist(description, []File(files))
+	g := createNewGist(description, files)
 	fmt.Println("g:", g)
 	resp, httperr := http.Post(api_url+"gists", "application/json", strings.NewReader(g))
 	if httperr != nil {
