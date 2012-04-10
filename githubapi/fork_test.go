@@ -3,7 +3,7 @@ package githubapi
 import "testing"
 
 func Test_GetForks(t *testing.T) {
-	g := jsonToGist([]byte(GET_GIST))
+	g := jsonToGistResponse([]byte(GET_GIST))
 	forks := g.Forks
 	if len(forks) != 1 {
 		t.Error("GetForks is wrong length")
