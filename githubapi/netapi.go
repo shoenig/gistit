@@ -36,14 +36,14 @@ func ListUserGists(user string) []GistResponse {
 }
 
 // description is optional, "" implies no description provided
-func CreateNewGist(description string, files ...File) string {
-	ret := "{\"description\": \"" + description + "\"," +
-		"\"public\": True," +
-		"\"files\": {"
+func createNewGist(description string, files ...File) string {
+	ret := `{"description": "` + description + `",` +
+		`"public": True,` +
+		`"files": {`
 	for _, k := range files {
 		ret += k.toJSON() + ", "
 	}
-	ret += "}" // close files:
-	ret += "}" // close entire map
+	ret += `}` // close files:
+	ret += `}` // close entire map
 	return ret
 }
