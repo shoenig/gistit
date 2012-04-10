@@ -1,10 +1,7 @@
 package githubapi
 
 import "encoding/json"
-import "strconv"
-import "net/http"
 import "fmt"
-import "io/ioutil"
 import "os"
 
 type GistResponse struct {
@@ -71,15 +68,4 @@ func jsonToGistResponse(jsondata []byte) GistResponse {
 		os.Exit(1)
 	}
 	return g
-}
-
-func GetGistResponse(id int) GistResponse {
-	resp, httperr := http.Get(api_url + "gists/" + strconv.Itoa(id))
-	if httperr != nil {
-		fmt.Println("Error connecting to api.github.com", httperr)
-		os.Exit(1)
-	}
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	return jsonToGistResponse(body)
 }
