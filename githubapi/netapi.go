@@ -1,6 +1,7 @@
 package githubapi
 
 import "strconv"
+import "strings"
 import "encoding/json"
 import "net/http"
 import "io/ioutil"
@@ -36,18 +37,30 @@ func ListUserGists(user string) []GistResponse {
 }
 
 func PushGist(description string, files ...File) {
-	// TODO: implement this
 	// TODO: enable setting public to False (needs OAUTH working)
+	g := createNewGist(description, []File(files))
+	fmt.Println("g:", g)
+	resp, httperr := http.Post(api_url+"gists", "application/json", strings.NewReader(g))
+	if httperr != nil {
+		fmt.Println("Error posting gist to api.github.com", httperr)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response:")
+	fmt.Println(string(body))
 }
 
 // description is optional, "" implies no description provided
-func createNewGist(description string, files ...File) string {
-	ret := `{"description": "` + description + `",` +
-		`"public": True,` +
+func createNewGist(description string, files []File) string {
+	ret := `{"description": "` + description + `", ` +
+		`"public": true, ` +
 		`"files": {`
 	for _, k := range files {
 		ret += k.toJSON() + ", "
 	}
+	// remove trailing ','
+	ret = ret[:len(ret)-2]
 	ret += `}` // close files:
 	ret += `}` // close entire map
 	return ret

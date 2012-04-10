@@ -4,7 +4,7 @@ import "testing"
 import "strings"
 
 func Test_createNewGist(t *testing.T) {
-	f := NewFile("file1.txt", "String file contents")
+	f := []File{NewFile("file1.txt", "String file contents")}
 	d := "the description for this gist"
 	json := createNewGist(d, f)
 	if len(json) == 0 {
@@ -16,10 +16,10 @@ func Test_createNewGist(t *testing.T) {
 	if !strings.Contains(json, `"description": "the description for this gist",`) {
 		t.Error("createNewGist JSON error - description")
 	}
-	if !strings.Contains(json, `"public": True,`) {
+	if !strings.Contains(json, `"public": true,`) {
 		t.Error("createNewGist JSON error - public")
 	}
-	if !strings.Contains(json, `"files": {"file1.txt": { "content": "String file contents"}, }`) {
+	if !strings.Contains(json, `"files": {"file1.txt": { "content": "String file contents"}}`) {
 		t.Error("createNewGist JSON error - files")
 	}
 }
@@ -28,8 +28,9 @@ func Test_createNewGistThreeFiles(t *testing.T) {
 	f1 := NewFile("file1.txt", "Contents of File 1!")
 	f2 := NewFile("file2.txt", "Contents of File 2.")
 	f3 := NewFile("file3.txt", "Contents of File 3?")
+	fs := []File{f1, f2, f3}
 	d := "A Gist made of THREE files!!"
-	json := createNewGist(d, f1, f2, f3)
+	json := createNewGist(d, fs)
 	if len(json) == 0 {
 		t.Error("createNewGist failed to create anything")
 	}
@@ -40,10 +41,10 @@ func Test_createNewGistThreeFiles(t *testing.T) {
 		t.Error("createNewGist JSON error - description")
 	}
 
-	if !strings.Contains(json, `"public": True,`) {
+	if !strings.Contains(json, `"public": true,`) {
 		t.Error("createNewGist JSON error - public")
 	}
-	if !strings.Contains(json, `"files": {"file1.txt": { "content": "Contents of File 1!"}, "file2.txt": { "content": "Contents of File 2."}, "file3.txt": { "content": "Contents of File 3?"}, }`) {
+	if !strings.Contains(json, `"files": {"file1.txt": { "content": "Contents of File 1!"}, "file2.txt": { "content": "Contents of File 2."}, "file3.txt": { "content": "Contents of File 3?"}}`) {
 		t.Error("createNewGist JSON error - files")
 	}
 }
