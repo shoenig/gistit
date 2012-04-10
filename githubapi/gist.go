@@ -24,7 +24,11 @@ type GistResponse struct {
 }
 
 func (g GistResponse) String() string {
-	return "TODO"
+	bytes, marshalerr := json.Marshal(g)
+	if marshalerr != nil {
+		return ""
+	}
+	return string(bytes)
 }
 
 func (g *GistResponse) UserLogin() string {
