@@ -10,8 +10,13 @@ import "./githubapi"
 func main() {
 	// gistitrcOK := gistitrc() NOT YET SUPPORTED
 
-	g := githubapi.GetGistResponse(1)
+	//g := githubapi.GetGistResponse(1)
 	//fmt.Println(g.Url())
+	//fmt.Println(g)
+	sethgists := githubapi.ListUserGists("shoenig")
+	fmt.Println("sg len:", len(sethgists))
+	fmt.Println(sethgists[0])
+	g := githubapi.GetGistResponse(1645299)
 	fmt.Println(g)
 }
 
