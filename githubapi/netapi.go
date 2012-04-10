@@ -35,6 +35,11 @@ func ListUserGists(user string) []GistResponse {
 	return gr
 }
 
+func PushGist(description string, files ...File) {
+	// TODO: implement this
+	// TODO: enable setting public to False (needs OAUTH working)
+}
+
 // description is optional, "" implies no description provided
 func createNewGist(description string, files ...File) string {
 	ret := `{"description": "` + description + `",` +

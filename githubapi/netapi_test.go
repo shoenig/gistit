@@ -22,7 +22,30 @@ func Test_createNewGist(t *testing.T) {
 	if !strings.Contains(json, `"files": {"file1.txt": { "content": "String file contents"}, }`) {
 		t.Error("createNewGist JSON error - files")
 	}
+}
 
+func Test_createNewGistThreeFiles(t *testing.T) {
+	f1 := NewFile("file1.txt", "Contents of File 1!")
+	f2 := NewFile("file2.txt", "Contents of File 2.")
+	f3 := NewFile("file3.txt", "Contents of File 3?")
+	d := "A Gist made of THREE files!!"
+	json := createNewGist(d, f1, f2, f3)
+	if len(json) == 0 {
+		t.Error("createNewGist failed to create anything")
+	}
+	if json[0] != '{' || json[len(json)-1] != '}' {
+		t.Error("createNewGist severe JSON formatting error")
+	}
+	if !strings.Contains(json, `"description": "A Gist made of THREE files!!"`) {
+		t.Error("createNewGist JSON error - description")
+	}
+
+	if !strings.Contains(json, `"public": True,`) {
+		t.Error("createNewGist JSON error - public")
+	}
+	if !strings.Contains(json, `"files": {"file1.txt": { "content": "Contents of File 1!"}, "file2.txt": { "content": "Contents of File 2."}, "file3.txt": { "content": "Contents of File 3?"}, }`) {
+		t.Error("createNewGist JSON error - files")
+	}
 }
 
 /*  SAMPLE PATTERN:
