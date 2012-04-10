@@ -7,181 +7,7 @@ import "fmt"
 import "io/ioutil"
 import "os"
 
-// Gist contains methods which provide meta-data about a
-// gist on github.
 type Gist struct {
-	data        internal
-	initialized bool
-	orig        string
-}
-
-func (g Gist) String() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.orig
-}
-
-func (g *Gist) Url() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Url
-}
-
-func (g *Gist) Id() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Id
-}
-
-func (g *Gist) Description() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Description
-}
-
-func (g *Gist) Public() bool {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Public
-}
-
-func (g *Gist) UserLogin() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.UserMap["user"].Login
-}
-
-func (g *Gist) UserId() int {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.UserMap["user"].Id
-}
-
-func (g *Gist) UserAvatarUrl() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.UserMap["user"].Avatar_Url
-}
-
-func (g *Gist) UserGravatarId() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.UserMap["user"].Gravatar_Id
-}
-
-func (g *Gist) UserUrl() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.UserMap["user"].Url
-}
-
-func (g *Gist) Comments() int {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Comments
-}
-
-func (g *Gist) HtmlUrl() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Html_Url
-}
-
-func (g *Gist) GitPullUrl() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Git_Pull_Url
-}
-
-func (g *Gist) GitPushUrl() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Git_Push_Url
-}
-
-func (g *Gist) CreatedAt() string {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Created_At
-}
-
-func (g *Gist) GetFiles() []File {
-	if !g.initialized {
-		noinit()
-	}
-	var files []File
-	for _, v := range g.data.Files {
-		files = append(files, v)
-	}
-	return files
-}
-
-func (g *Gist) GetFile(filename string) File {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Files[filename]
-}
-
-func (g *Gist) GetForks() []Fork {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.Forks
-}
-
-func (g *Gist) GetHistories() []History {
-	if !g.initialized {
-		noinit()
-	}
-	return g.data.History
-}
-
-func jsonToGist(jsondata []byte) Gist {
-	var i internal
-	jsonerr := json.Unmarshal(jsondata, &i)
-	if jsonerr != nil {
-		fmt.Printf("Error unmarshaling JSON content", jsonerr)
-		os.Exit(1)
-	}
-	var g Gist
-	g.orig = string(jsondata)
-	g.setInternal(i)
-	return g
-}
-
-func GetGist(id int) Gist {
-	resp, httperr := http.Get(api_url + "gists/" + strconv.Itoa(id))
-	if httperr != nil {
-		fmt.Println("Error connecting to api.github.com", httperr)
-		os.Exit(1)
-	}
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	return jsonToGist(body)
-}
-
-// We do not want users to be able to access these fields directly
-// (we do not want them handling interface{}),
-// but they must be public for the JSON package to use. So we put them
-// in an unexported struct, and put the struct in a wrapper, which then
-// provides public accessors.
-type internal struct {
 	Url          string
 	Id           string
 	Description  string
@@ -197,14 +23,59 @@ type internal struct {
 	History      []History
 }
 
-func noinit() {
-	panic("cannot call method on un-initialized gist")
+func (g Gist) String() string {
+	return "TODO"
 }
 
-func (g *Gist) setInternal(i internal) {
-	if g.initialized {
-		noinit()
+func (g *Gist) UserLogin() string {
+	return g.UserMap["user"].Login
+}
+
+func (g *Gist) UserId() int {
+	return g.UserMap["user"].Id
+}
+
+func (g *Gist) UserAvatarUrl() string {
+	return g.UserMap["user"].Avatar_Url
+}
+
+func (g *Gist) UserGravatarId() string {
+	return g.UserMap["user"].Gravatar_Id
+}
+
+func (g *Gist) UserUrl() string {
+	return g.UserMap["user"].Url
+}
+
+func (g *Gist) GetFiles() []File {
+	var files []File
+	for _, v := range g.Files {
+		files = append(files, v)
 	}
-	g.initialized = true
-	g.data = i
+	return files
+}
+
+func (g *Gist) GetFile(filename string) File {
+	return g.Files[filename]
+}
+
+func jsonToGist(jsondata []byte) Gist {
+	var g Gist
+	jsonerr := json.Unmarshal(jsondata, &g)
+	if jsonerr != nil {
+		fmt.Printf("Error unmarshaling JSON content", jsonerr)
+		os.Exit(1)
+	}
+	return g
+}
+
+func GetGist(id int) Gist {
+	resp, httperr := http.Get(api_url + "gists/" + strconv.Itoa(id))
+	if httperr != nil {
+		fmt.Println("Error connecting to api.github.com", httperr)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return jsonToGist(body)
 }

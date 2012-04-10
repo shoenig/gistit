@@ -4,15 +4,15 @@ import "testing"
 
 func Test_GetHistories(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
-	hists := g.GetHistories()
+	hists := g.History
 	if len(hists) != 1 {
-		t.Error("GetHistories is wrong length")
+		t.Error("g.History is wrong length")
 	}
 }
 
 func Test_History_Url(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
-	h := g.GetHistories()[0]
+	h := g.History[0]
 	if h.Url != "https://api.github.com/gists/1/57a7f021a713b1c5a6a199b54cc514735d2d462f" {
 		t.Error("History Url is incorrect")
 	}
@@ -20,7 +20,7 @@ func Test_History_Url(t *testing.T) {
 
 func Test_History_Version(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
-	h := g.GetHistories()[0]
+	h := g.History[0]
 	if h.Version != "57a7f021a713b1c5a6a199b54cc514735d2d462f" {
 		t.Error("History Version is incorrect")
 	}
@@ -28,7 +28,7 @@ func Test_History_Version(t *testing.T) {
 
 func Test_History_User(t *testing.T) {
 	g := jsonToGist([]byte(GET_GIST))
-	h := g.GetHistories()[0]
+	h := g.History[0]
 	if h.User.Login != "octocat" {
 		t.Error("History User.Login incorrect")
 	}
