@@ -4,4 +4,12 @@
 
 package githubapi
 
+import "strings"
+
 const api_url = "https://api.github.com/"
+
+func EscapeNLs(input string) string {
+	a := strings.Replace(input, "\n", "", -1)
+	b := strings.Replace(a, "\r\n", "", -1)
+	return b
+}

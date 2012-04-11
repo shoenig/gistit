@@ -24,7 +24,7 @@ func setFlags() (help bool, description, filename string, args []string) {
 }
 
 func printHelpMessage() {
-	fmt.Println("gistit v0.1")
+	fmt.Println("gistit v0.2")
 	fmt.Println("Reads on stdin for input") // or reads filenames on cmd line
 	fmt.Println("Optional Arguments:")
 	fmt.Println("\t-help Help Screen")
@@ -41,12 +41,6 @@ func readStdin() string {
 	return string(bytes)
 }
 
-func newlineToNewLine(input string) string {
-	a := strings.Replace(input, "\n", "\\n", -1)
-	b := strings.Replace(a, "\r\n", "\\n", -1)
-	return b
-}
-
 func dummy() {
 }
 
@@ -58,7 +52,8 @@ func readFiles(filenames []string) ([]githubapi.File, error) {
 			fmt.Println("Error reading file", e)
 			os.Exit(1)
 		}
-		files = append(files, githubapi.NewFile(f, string(c)))
+		cleaned := githubapi.EscapeNLs(string(c))
+		files = append(files, githubapi.NewFile(f, cleaned))
 	}
 	return files, nil
 }

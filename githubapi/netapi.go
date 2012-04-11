@@ -86,5 +86,7 @@ func createNewGist(description string, files []File) string {
 	ret = ret[:len(ret)-2]
 	ret += `}` // close files:
 	ret += `}` // close entire map
-	return ret
+
+	escaped := EscapeNLs(ret)
+	return escaped
 }

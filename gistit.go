@@ -24,8 +24,7 @@ func main() {
 
 	if len(args) == 0 {
 		all := readStdin()
-		cleaned := newlineToNewLine(all)
-		gr := githubapi.PushGist(desc, githubapi.NewFile(fname, cleaned))
+		gr := githubapi.PushGist(desc, githubapi.NewFile(fname, all))
 		fmt.Println(gr.Html_Url)
 	} else {
 		files, ferr := readFiles(args)
@@ -34,7 +33,6 @@ func main() {
 			os.Exit(1)
 		}
 		gr := githubapi.PushMultiGist(desc, files)
-		fmt.Println(gr)
 		fmt.Println(gr.Html_Url)
 	}
 }
