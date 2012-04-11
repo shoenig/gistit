@@ -34,7 +34,9 @@ func readStdin() string {
 }
 
 func newlineToNewLine(input string) string {
-	return strings.Replace(input, "\n", "\\n", -1)
+	a := strings.Replace(input, "\n", "\\n", -1)
+	b := strings.Replace(a, "\r\n", "\\n", -1)
+	return b
 }
 
 func dummy() {
