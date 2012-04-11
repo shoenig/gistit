@@ -43,7 +43,7 @@ func newlineToNewLine(input string) string {
 func dummy() {
 }
 
-func ReadFiles(filenames []string) ([]string, error) {
+func readFiles(filenames []string) ([]string, error) {
 	var contents []string
 	for _, f := range filenames {
 		c, e := ioutil.ReadFile(f)
