@@ -36,10 +36,9 @@ func ListUserGists(user string) []GistResponse {
 	return gr
 }
 
-func PushGist(description string, files ...File) {
+func PushGist(description string, files ...File) GistResponse {
 	// TODO: enable setting public to False (needs OAUTH working)
 	g := createNewGist(description, files)
-	fmt.Println("g:", g)
 	resp, httperr := http.Post(api_url+"gists", "application/json", strings.NewReader(g))
 	if httperr != nil {
 		fmt.Println("Error posting gist to api.github.com", httperr)
@@ -47,8 +46,15 @@ func PushGist(description string, files ...File) {
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response:")
-	fmt.Println(string(body))
+	sbody := string(body)
+	cleaned := nullToEmptyString(sbody)
+	cleanbytes := []byte(cleaned)
+	gr := jsonToGistResponse(cleanbytes)
+	return gr
+}
+
+func nullToEmptyString(input string) string {
+	return strings.Replace(input, "null", "{}", -1)
 }
 
 // description is optional, "" implies no description provided

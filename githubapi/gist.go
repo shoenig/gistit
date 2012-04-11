@@ -65,6 +65,7 @@ func jsonToGistResponse(jsondata []byte) GistResponse {
 	jsonerr := json.Unmarshal(jsondata, &g)
 	if jsonerr != nil {
 		fmt.Printf("Error unmarshaling JSON content", jsonerr)
+		fmt.Println(string(jsondata))
 		os.Exit(1)
 	}
 	return g

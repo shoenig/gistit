@@ -8,18 +8,17 @@ import "strings"
 import "./githubapi"
 
 func main() {
-	// gistitrcOK := gistitrc() NOT YET SUPPORTED
+	dummy() // emacs.el does not format correctly without this
+	help, desc, fname := setFlags()
+	if help != false {
+		printHelpMessage()
+		os.Exit(0)
+	}
+	all := readStdin()
+	cleaned := newlineToNewLine(all)
+	gr := githubapi.PushGist(desc, githubapi.NewFile(fname, cleaned))
 
-	//g := githubapi.GetGistResponse(1)
-	//fmt.Println(g.Url())
-	//fmt.Println(g)
-	// sethgists := githubapi.ListUserGists("shoenig")
-	// fmt.Println("sg len:", len(sethgists))
-	// fmt.Println(sethgists[0])
-	// g := githubapi.GetGistResponse(1645299)
-	// fmt.Println(g)
-	githubapi.PushGist("a sample gist", githubapi.NewFile("sample_foo.txt", "/tmp/sample_foo.txt"))
-	fmt.Println("end")
+	fmt.Println(gr.Html_Url)
 }
 
 func gistitrc() error {
