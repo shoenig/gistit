@@ -1,3 +1,7 @@
+// Copyright 2012 Seth Hoenig. All rights reserved.
+// Use of this source code is goverened by a GPL-style
+// license that can be found in the LICENSE file.
+
 package githubapi
 
 // Provides content of individual files that make up a gist
@@ -8,6 +12,8 @@ type File struct {
 	Content  string
 }
 
+// Create a new File, which is compatible with github's
+// JSON representation of a file within a gist.
 func NewFile(fname, content string) File {
 	return File{fname, 0, "", content}
 }
@@ -18,9 +24,7 @@ func NewFile(fname, content string) File {
 // entire JSON structure for uploading to github
 func (f *File) toJSON() string {
 	// SAMPLE FORMAT:
-	//  "file1.txt": {
-	//     "content": "String file contents"
-	//  }
+	//   "file1.txt": {"content": "String file contents"}
 	ret := "\"" + f.Filename + "\": { \"content\": \"" + f.Content +
 		"\"}"
 	return ret

@@ -1,3 +1,7 @@
+// Copyright 2012 Seth Hoenig. All rights reserved.
+// Use of this source code is goverened by a GPL-style
+// license that can be found in the LICENSE file.
+
 package githubapi
 
 import "strconv"
@@ -8,6 +12,8 @@ import "io/ioutil"
 import "fmt"
 import "os"
 
+// Returns a gist response (unpacked from JSON reply) that is associated
+// with id.
 func GetGistResponse(id int) GistResponse {
 	resp, httperr := http.Get(api_url + "gists/" + strconv.Itoa(id))
 	if httperr != nil {
@@ -19,6 +25,8 @@ func GetGistResponse(id int) GistResponse {
 	return jsonToGistResponse(body)
 }
 
+// Returns a list of gist responses (unpacked from JSON reply) that is
+// associated with a user login.
 func ListUserGists(user string) []GistResponse {
 	resp, httperr := http.Get(api_url + "users/" + user + "/gists")
 	if httperr != nil {
@@ -36,10 +44,15 @@ func ListUserGists(user string) []GistResponse {
 	return gr
 }
 
+// Push a file (or multiple files) to gist.github.com. This is just a
+// convenience function that wraps PushMultiGist, which does the work.
 func PushGist(description string, files ...File) GistResponse {
 	return PushMultiGist(description, files)
 }
 
+// Push a file (or multiple files) to gist.github.com. Currently only
+// creating anonymous gists is supported. One possible workaround for now
+// is to just fork the anonymous gist into your own account.
 func PushMultiGist(description string, files []File) GistResponse {
 	// TODO: enable setting public to False (needs OAUTH working)
 	g := createNewGist(description, files)

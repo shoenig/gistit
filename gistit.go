@@ -1,3 +1,13 @@
+// Copyright 2012 Seth Hoenig. All rights reserved.
+// Use of this source code is goverened by a GPL-style
+// license that can be found in the LICENSE file.
+
+// Package main contains the root of the gistit project. It
+// makes use of the githubapi package to provide file pushing
+// capabilities to github's gist service.
+//
+// References:
+//  http://api.github.com/
 package main
 
 import "fmt"
