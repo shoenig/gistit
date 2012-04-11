@@ -9,16 +9,21 @@ import "./githubapi"
 
 func main() {
 	dummy() // emacs.el does not format correctly without this
-	help, desc, fname := setFlags()
+	help, desc, fname, args := setFlags()
 	if help != false {
 		printHelpMessage()
 		os.Exit(0)
 	}
-	all := readStdin()
-	cleaned := newlineToNewLine(all)
-	gr := githubapi.PushGist(desc, githubapi.NewFile(fname, cleaned))
 
-	fmt.Println(gr.Html_Url)
+	if len(args) == 0 {
+		all := readStdin()
+		cleaned := newlineToNewLine(all)
+		gr := githubapi.PushGist(desc, githubapi.NewFile(fname, cleaned))
+		fmt.Println(gr.Html_Url)
+	} else {
+		// read command line stuff
+	}
+
 }
 
 func gistitrc() error {

@@ -6,12 +6,13 @@ import "strings"
 import "os"
 import "flag"
 
-func setFlags() (help bool, description, filename string) {
+func setFlags() (help bool, description, filename string, args []string) {
 	flag.BoolVar(&help, "help", false, "show help message")
 	flag.StringVar(&filename, "name", "noname.txt", "filename to send to github")
 	flag.StringVar(&description, "description", "no description", "description of file")
 
 	flag.Parse()
+	args = flag.Args()
 	return
 }
 
