@@ -5,6 +5,7 @@ import "fmt"
 import "strings"
 import "os"
 import "flag"
+import "./githubapi"
 
 func setFlags() (help bool, description, filename string, args []string) {
 	flag.BoolVar(&help, "help", false, "show help message")
@@ -43,15 +44,15 @@ func newlineToNewLine(input string) string {
 func dummy() {
 }
 
-func readFiles(filenames []string) ([]string, error) {
-	var contents []string
+func readFiles(filenames []string) ([]githubapi.File, error) {
+	var files []githubapi.File
 	for _, f := range filenames {
 		c, e := ioutil.ReadFile(f)
 		if e != nil {
 			fmt.Println("Error reading file", e)
 			os.Exit(1)
 		}
-		contents = append(contents, string(c))
+		files = append(files, githubapi.NewFile(f, string(c)))
 	}
-	return contents, nil
+	return files, nil
 }

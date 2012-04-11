@@ -37,6 +37,10 @@ func ListUserGists(user string) []GistResponse {
 }
 
 func PushGist(description string, files ...File) GistResponse {
+	return PushMultiGist(description, files)
+}
+
+func PushMultiGist(description string, files []File) GistResponse {
 	// TODO: enable setting public to False (needs OAUTH working)
 	g := createNewGist(description, files)
 	resp, httperr := http.Post(api_url+"gists", "application/json", strings.NewReader(g))

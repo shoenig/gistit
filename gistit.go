@@ -21,9 +21,15 @@ func main() {
 		gr := githubapi.PushGist(desc, githubapi.NewFile(fname, cleaned))
 		fmt.Println(gr.Html_Url)
 	} else {
-		// read command line stuff
+		files, ferr := readFiles(args)
+		if ferr != nil {
+			fmt.Println("Error reading file", ferr)
+			os.Exit(1)
+		}
+		gr := githubapi.PushMultiGist(desc, files)
+		fmt.Println(gr)
+		fmt.Println(gr.Html_Url)
 	}
-
 }
 
 func gistitrc() error {
