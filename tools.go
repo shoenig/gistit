@@ -8,8 +8,8 @@ import "flag"
 
 func setFlags() (help bool, description, filename string, args []string) {
 	flag.BoolVar(&help, "help", false, "show help message")
-	flag.StringVar(&filename, "name", "noname.txt", "filename to send to github")
-	flag.StringVar(&description, "description", "no description", "description of file")
+	flag.StringVar(&filename, "name", "untitled.txt", "filename to send to github")
+	flag.StringVar(&description, "desc", "No Description", "description of file")
 
 	flag.Parse()
 	args = flag.Args()
@@ -45,12 +45,13 @@ func dummy() {
 
 func ReadFiles(filenames []string) ([]string, error) {
 	var contents []string
-	for f := range filenames {
-		if c, e := ioutil.ReadFile(f); e != nil {
+	for _, f := range filenames {
+		c, e := ioutil.ReadFile(f)
+		if e != nil {
 			fmt.Println("Error reading file", e)
 			os.Exit(1)
 		}
-		contents = append(contents, c)
+		contents = append(contents, string(c))
 	}
 	return contents, nil
 }
