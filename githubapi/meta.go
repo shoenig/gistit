@@ -9,7 +9,7 @@ import "strings"
 const api_url = "https://api.github.com/"
 
 func EscapeNLs(input string) string {
-	a := strings.Replace(input, "\n", "\\n", -1)
-	b := strings.Replace(a, "\r\n", "\\n", -1)
+	a := strings.Replace(input, "\r\n", "\\n", -1)
+	b := strings.Replace(a, "\n", "\\n", -1)
 	return b
 }
