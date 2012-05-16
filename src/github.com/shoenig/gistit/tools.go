@@ -2,6 +2,7 @@
 // Use of this source code is goverened by a GPL-style
 // license that can be found in the LICENSE file.
 
+
 package main
 
 import "io/ioutil"
@@ -11,7 +12,7 @@ import "os"
 import "flag"
 import "errors"
 import "path/filepath"
-import "./githubapi"
+import "github.com/shoenig/gistit/githubapi"
 
 func setFlags() (help bool, description, filename string, args []string) {
 	flag.BoolVar(&help, "help", false, "show help message")

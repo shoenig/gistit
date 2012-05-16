@@ -12,7 +12,7 @@ package main
 
 import "fmt"
 import "os"
-import "./githubapi"
+import "github.com/shoenig/gistit/githubapi"
 
 func main() {
 	dummy() // emacs.el does not format correctly without this
